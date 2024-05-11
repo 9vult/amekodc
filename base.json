@@ -1,0 +1,17 @@
+{
+  "Name": "Ameko Dependency Control Base",
+  "Description": "Default Dependency Control repository included with Ameko",
+  "Version": 1.0,
+  "Repositories": [],
+  "Scripts": [
+    {
+      "Name": "Example Script 1",
+      "QualifiedName": "9volt.example1",
+      "Description": "Example script",
+      "Author": "9volt",
+      "CurrentVersion": 1.0,
+      "Dependencies": [],
+      "Url": "https://raw.githubusercontent.com/9vult/amekodc/main/scripts/9volt/9volt.example1.cs"
+    }
+  ]
+}
