@@ -1,84 +1,63 @@
-using System.Threading.Tasks;
+// SPDX-License-Identifier: MIT
 
-using Holo;
 using AssCS;
+using Holo;
+using Holo.Scripting;
 
-using MsBox.Avalonia;
-using MsBox.Avalonia.Enums;
-
+/// <summary>
+/// An example script for testing purposes
+/// </summary>
 public class Example1 : HoloScript
-{	
-	/// <summary>
-	/// This function is required for execution
-	/// </summary>
-	/// <returns>Result of the execution</returns>
-	public async override Task<ExecutionResult> Execute()
-	{
-		Logger.Info("Starting...");
-		var currentFile = HoloContext.Instance.Workspace.WorkingFile;
-		var stripped = currentFile.SelectedEvent.GetStrippedText();
-		
-		Logger.Info("Displaying the message box");
-		var box = MessageBoxManager.GetMessageBoxStandard(
-			$"{Name} Cool Message Box!", 
-			$"The stripped content of the selected line is:\n{stripped}",
-			ButtonEnum.YesNo
-		);
-		var result = await box.ShowAsync();
-		
-		switch (result)
-		{
-			case ButtonResult.Yes:
-				Logger.Info("The YES button was clicked!");
-				return new ExecutionResult { Status = ExecutionStatus.Success };
-			case ButtonResult.No:
-				Logger.Error("The NO button was clicked!");
-				return new ExecutionResult { Status = ExecutionStatus.Warning };
-			default:
-				Logger.Error("The X button was clicked!!!");
-				return new ExecutionResult { Status = ExecutionStatus.Failure, Message = "An error occured" };
-		}
-	}
-	
-	/// <summary>
-	/// This function is only needed for execution of exposed functions
-	/// </summary>
-	/// <param name="qname">Name of the function to execute</param>
-	/// <returns></returns>
-	public async override Task<ExecutionResult> Execute(string qname)
-	{
-		Logger.Info($"Function {qname} selected");
-		switch (qname)
-		{
-			case "9volt.example1.math":
-				return await Math();
-			default:
-				return new ExecutionResult { Status = ExecutionStatus.Failure, Message = "Unknown function" };
-		}
-	}
+{
+    /// <summary>
+    /// Information about the script
+    /// </summary>
+    public override ScriptInfo Info { get; init; } = new()
+    {
+        DisplayName = "Example Script 1",
+        QualifiedName = "9volt.example1",
+        Description = "An example script for testing purposes",
+        Author = "9volt",
+        Version = 0.1m,
+        Exports = [ "9volt.example1.math" ],
+        LogDisplay = LogDisplay.Ephemeral
+    };
 
-	/// <summary>
-	/// An exposed function
-	/// </summary>
-	/// <returns>Execution result</returns>
-	private async Task<ExecutionResult> Math() {
-		var box = MessageBoxManager.GetMessageBoxStandard(
-			"Math Prompt", 
-			"Did you know that 2+2=4?",
-			ButtonEnum.Ok
-		);
-		var result = await box.ShowAsync();
-		return new ExecutionResult { Status = ExecutionStatus.Success };
-	}
-	
-	private static string _name = "Example Script 1";
-	private static string _qname = "9volt.example1";
-	private static string _desc = "Example script";
-	private static string _author = "9volt";
-	private static double _ver = 1.0;
-	private static LogDisplay _logDisplay = LogDisplay.OnError;
-	private static string[]? _expFuncNames = { "9volt.example1.math" }; // can be null or empty
-	private static string? _menu = "Example Scripts"; // optional
-	public Example1() : base(_name, _qname, _desc, _author, _ver, _logDisplay, _expFuncNames, _menu)
-	{ }
+    /// <summary>
+    /// Default execution entry point 
+    /// </summary>
+    /// <returns>An appropriate <see cref="ExecutionResult"/></returns>
+    public override async Task<ExecutionResult> ExecuteAsync ()
+    {
+        Logger.Info($"Example1 executed!");
+        return ExecutionResult.Success;
+    }
+    
+    /// <summary>
+    /// Entry point for calling exposed functions
+    /// </summary>
+    /// <param name="methodName">Qualified name of the function to execute</param>
+    /// <returns>An appropriate <see cref="ExecutionResult"/></returns>
+    public override async Task<ExecutionResult> ExecuteAsync (string methodName)
+    {
+        Logger.Info($"Example1 executed for function {methodName}");
+
+        switch (methodName)
+        {
+            case "9volt.example1.math":
+                return await Math();
+            default:
+                return new ExecutionResult { Status = ExecutionStatus.Failure, Message = "Unknown method." };
+        }
+    }
+
+    /// <summary>
+    /// An example exposed function
+    /// </summary>
+    /// <returns><see cref="ExecutionResult.Success"/> if the math was successful</returns>
+    private async Task<ExecutionResult> Math ()
+    {
+        Logger.Info($"Math executed: 1 + 1 = 2");
+        return ExecutionResult.Success;
+    }
 }
