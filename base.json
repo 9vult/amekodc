@@ -5,15 +5,28 @@
   "IsBetaChannel": false,
   "Modules": [
     {
+      "Type": "Script",
       "DisplayName": "Example Script 1",
       "QualifiedName": "9volt.example1",
       "Description": "An example script for testing purposes",
       "Author": "9volt",
       "Version": 0.1,
       "IsBetaChannel": false,
-      "Dependencies": [],
+      "Dependencies": [ "9volt.calculator" ],
       "Tags": [ "Example", "Dialogue" ],
       "Url": "https://dc.ameko.moe/scripts/9volt/9volt.example1.cs"
+    },
+    {
+      "Type": "Library",
+      "DisplayName": "CalculatorLib",
+      "QualifiedName": "9volt.calculator",
+      "Description": "A basic library for testing",
+      "Author": "9volt",
+      "Version": 0.1,
+      "IsBetaChannel": false,
+      "Dependencies": [],
+      "Tags": [ "Calculator" ],
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.calculator.lib.cs"
     }
   ],
   "Repositories": []

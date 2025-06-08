@@ -1,63 +1,63 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MPL-2.0
 
-using AssCS;
-using Holo;
+using System.Threading.Tasks;
 using Holo.Scripting;
+using Holo.Scripting.Models;
 
-/// <summary>
-/// An example script for testing purposes
-/// </summary>
+//css_include 9volt.calculator.lib.cs;
+
 public class Example1 : HoloScript
 {
-    /// <summary>
-    /// Information about the script
-    /// </summary>
-    public override ScriptInfo Info { get; init; } = new()
+    public override async Task<ExecutionResult> ExecuteAsync()
     {
-        DisplayName = "Example Script 1",
-        QualifiedName = "9volt.example1",
-        Description = "An example script for testing purposes",
-        Author = "9volt",
-        Version = 0.1m,
-        Exports = [ "9volt.example1.math" ],
-        LogDisplay = LogDisplay.Ephemeral
-    };
-
-    /// <summary>
-    /// Default execution entry point 
-    /// </summary>
-    /// <returns>An appropriate <see cref="ExecutionResult"/></returns>
-    public override async Task<ExecutionResult> ExecuteAsync ()
-    {
-        Logger.Info($"Example1 executed!");
+        Logger.Info($"This is the primary execution entry point!");
         return ExecutionResult.Success;
     }
-    
-    /// <summary>
-    /// Entry point for calling exposed functions
-    /// </summary>
-    /// <param name="methodName">Qualified name of the function to execute</param>
-    /// <returns>An appropriate <see cref="ExecutionResult"/></returns>
-    public override async Task<ExecutionResult> ExecuteAsync (string methodName)
-    {
-        Logger.Info($"Example1 executed for function {methodName}");
 
+    public override async Task<ExecutionResult> ExecuteAsync(string methodName)
+    {
         switch (methodName)
         {
-            case "9volt.example1.math":
-                return await Math();
+            case "add":
+                Logger.Info($"The answer to your question is {Calculator.Add(40, 1)}");
+                break;
+            case "multiply":
+                Logger.Info($"The answer to your question is {Calculator.Multiply(17, 2)}");
+                break;
             default:
-                return new ExecutionResult { Status = ExecutionStatus.Failure, Message = "Unknown method." };
+                break;
         }
+        return ExecutionResult.Success;
     }
 
-    /// <summary>
-    /// An example exposed function
-    /// </summary>
-    /// <returns><see cref="ExecutionResult.Success"/> if the math was successful</returns>
-    private async Task<ExecutionResult> Math ()
+    public Test()
+        : base(
+            new ModuleInfo
+            {
+                DisplayName = "Example Script 1",
+                QualifiedName = "9volt.example1",
+                Description = "An example script for testing purposes",
+                Author = "9volt",
+                Version = 0.1m,
+                Exports =
+                [
+                    new MethodInfo
+                    {
+                        DisplayName = "Addition!",
+                        QualifiedName = "add",
+                        Submenu = "Math",
+                    },
+                    new MethodInfo
+                    {
+                        DisplayName = "Multiplication!",
+                        QualifiedName = "multiply",
+                        Submenu = "Math",
+                    },
+                ],
+                LogDisplay = LogDisplay.OnError,
+            }
+        )
     {
-        Logger.Info($"Math executed: 1 + 1 = 2");
-        return ExecutionResult.Success;
+        Logger.Info("Initialized test script!");
     }
 }
