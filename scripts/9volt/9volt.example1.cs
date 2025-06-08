@@ -30,7 +30,7 @@ public class Example1 : HoloScript
         return ExecutionResult.Success;
     }
 
-    public Test()
+    public Example1()
         : base(
             new ModuleInfo
             {
