@@ -6,6 +6,18 @@
   "Modules": [
     {
       "Type": "Script",
+      "DisplayName": "Generate Chapters",
+      "QualifiedName": "9volt.generateChapters",
+      "Description": "Generate a Matroska chapters file using Significance syntax",
+      "Author": "9volt",
+      "Version": 1.0,
+      "IsBetaChannel": false,
+      "Dependencies": [],
+      "Tags": [ "Mux", "Chapters", "ua" ],
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.generateChapters.cs"
+    },
+    {
+      "Type": "Script",
       "DisplayName": "Example Script 1",
       "QualifiedName": "9volt.example1",
       "Description": "An example script for testing purposes",
