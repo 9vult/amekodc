@@ -1,6 +1,6 @@
 {
-  "Name": "Ameko Dependency Control Base",
-  "Description": "Default Dependency Control repository included with Ameko",
+  "Name": "Ameko Package Manager Base",
+  "Description": "Default package manager repository included with Ameko",
   "Maintainer": "9volt",
   "IsBetaChannel": false,
   "Modules": [
