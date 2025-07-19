@@ -18,6 +18,18 @@
     },
     {
       "Type": "Script",
+      "DisplayName": "AutoSwapper",
+      "QualifiedName": "9volt.autoSwapper",
+      "Description": "Swap the state of honorifics (*), mahjong terms (/), and verbal tics (<) in the script",
+      "Author": "9volt",
+      "Version": 1.0,
+      "IsBetaChannel": false,
+      "Dependencies": [],
+      "Tags": [ "Dialogue", "Daiz" ],
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.autoSwapper.cs"
+    },
+    {
+      "Type": "Script",
       "DisplayName": "Example Script 1",
       "QualifiedName": "9volt.example1",
       "Description": "An example script for testing purposes",
