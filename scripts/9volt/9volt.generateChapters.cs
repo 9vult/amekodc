@@ -42,8 +42,8 @@ public class GenerateChapters() : HoloScript(ScriptInfo)
         ],
     };
 
-    private readonly ISolutionProvider _solutionProvider =
-        ScriptServiceLocator.Get<ISolutionProvider>();
+    private readonly IProjectProvider _projectProvider =
+        ScriptServiceLocator.Get<IProjectProvider>();
     private readonly IScriptConfigurationService _config =
         ScriptServiceLocator.Get<IScriptConfigurationService>();
 
@@ -75,11 +75,11 @@ public class GenerateChapters() : HoloScript(ScriptInfo)
         ReadConfig(out var idField, out var nameField, out var marker, out var generateIntro);
 
         // Get all the events containing chapters
-        var wsp = _solutionProvider.Current.WorkingSpace;
+        var wsp = _projectProvider.Current.WorkingSpace;
         var doc = wsp?.Document;
         if (doc is null)
             return NoDocumentLoaded;
-        if (_solutionProvider.Current.WorkingSpace?.SavePath is null)
+        if (_projectProvider.Current.WorkingSpace?.SavePath is null)
             return DocumentNotSaved;
 
         var chapterEvents = doc
