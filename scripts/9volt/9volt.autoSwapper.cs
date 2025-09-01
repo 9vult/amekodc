@@ -51,7 +51,7 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
         ],
     };
 
-    private readonly ISolutionProvider _slnProvider = ScriptServiceLocator.Get<ISolutionProvider>();
+    private readonly IProjectProvider _prjProvider = ScriptServiceLocator.Get<IProjectProvider>();
     private readonly IScriptConfigurationService _config =
         ScriptServiceLocator.Get<IScriptConfigurationService>();
 
@@ -87,7 +87,7 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
     /// <returns><see langword="true"/> if successful</returns>
     private bool Swap(char flag)
     {
-        var wsp = _slnProvider.Current.WorkingSpace;
+        var wsp = _prjProvider.Current.WorkingSpace;
         if (wsp is null)
             return false;
         var doc = wsp.Document;
@@ -101,6 +101,9 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
             .ToList();
 
         List<Event> changedEvents = [];
+
+        // Start a transaction on the whole file (lol)
+        doc.HistoryManager.BeginTransaction(doc.EventManager.Events);
 
         foreach (var @event in doc.EventManager.Events)
         {
@@ -153,7 +156,7 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
             }
         }
 
-        wsp.Commit(changedEvents, CommitType.EventFull);
+        wsp.Commit(changedEvents, ChangeType.Modify);
         return true;
     }
 
