@@ -30,6 +30,18 @@
     },
     {
       "Type": "Script",
+      "DisplayName": "Line Breaker",
+      "QualifiedName": "9volt.lineBreaker",
+      "Description": "Easily manage the position of linebreaks",
+      "Author": "9volt",
+      "Version": 1.0,
+      "IsBetaChannel": false,
+      "Dependencies": [],
+      "Tags": [ "Dialogue" ],
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.lineBreaker.cs"
+    },
+    {
+      "Type": "Script",
       "DisplayName": "Example Script 1",
       "QualifiedName": "9volt.example1",
       "Description": "An example script for testing purposes",
