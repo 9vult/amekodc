@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 using Ameko.Services;
 using AssCS;
 using AssCS.History;
+using Holo.Models;
 using Holo.Providers;
 using Holo.Scripting;
 using Holo.Scripting.Models;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Dto;
-using MsBox.Avalonia.Enums;
+using Material.Icons;
 
 public class AutoSwapper() : HoloScript(ScriptInfo)
 {
@@ -54,6 +53,7 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
     private readonly IProjectProvider _prjProvider = ScriptServiceLocator.Get<IProjectProvider>();
     private readonly IScriptConfigurationService _config =
         ScriptServiceLocator.Get<IScriptConfigurationService>();
+    private readonly IMessageBoxService _msgBoxSvc = ScriptServiceLocator.Get<IMessageBoxService>();
 
     public override async Task<ExecutionResult> ExecuteAsync()
     {
@@ -164,20 +164,20 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
     {
         var content = string.Join(";", Styles.Select(s => s.Trim()));
 
-        var inputBox = MessageBoxManager.GetMessageBoxStandard(
-            new MessageBoxStandardParams
-            {
-                ButtonDefinitions = ButtonEnum.OkCancel,
-                CanResize = false,
-                ContentTitle = "AutoSwapper Config",
-                ContentMessage =
-                    "List of styles to swap, separated by semicolons. Wildcards (*, ?) are permitted.",
-                InputParams = new InputParams { DefaultValue = content },
-            }
+        var result = await _msgBoxSvc.ShowInputAsync(
+            "AutoSwapper Config",
+            "List of styles to swap, separated by semicolons. Wildcards (*, ?) are permitted.",
+            content,
+            MessageBoxButtons.OkCancel
         );
-        var result = await inputBox.ShowAsync();
-        if (result == ButtonResult.Ok)
-            Styles = inputBox.InputValue.Split(';');
+
+        if (result is null)
+            return;
+
+        var (boxResult, userInput) = result.Value;
+
+        if (boxResult == MessageBoxResult.Ok)
+            Styles = userInput.Split(';');
     }
 
     /// <summary>
