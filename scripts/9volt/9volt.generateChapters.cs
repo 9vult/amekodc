@@ -46,6 +46,7 @@ public class GenerateChapters() : HoloScript(ScriptInfo)
         ScriptServiceLocator.Get<IProjectProvider>();
     private readonly IScriptConfigurationService _config =
         ScriptServiceLocator.Get<IScriptConfigurationService>();
+    private readonly IWindowService _windowService = ScriptServiceLocator.Get<IWindowService>();
 
     // Not used
     public override async Task<ExecutionResult> ExecuteAsync()
@@ -176,13 +177,7 @@ public class GenerateChapters() : HoloScript(ScriptInfo)
     {
         ReadConfig(out var idField, out var nameField, out var marker, out var generateIntro);
 
-        var win = new Window
-        {
-            Title = "Generate Chapters Configuration",
-            Width = 350,
-            Height = 256,
-            WindowStartupLocation = WindowStartupLocation.CenterScreen,
-        };
+        var win = new Window { Title = "Generate Chapters Configuration" };
 
         var idFieldLabel = new Label { Content = "Field containing chapter markers" };
         var idActorRb = new RadioButton
@@ -241,24 +236,28 @@ public class GenerateChapters() : HoloScript(ScriptInfo)
             );
             _config.Set(this, "marker", markerBox.Text);
             _config.Set(this, "generateIntro", generateIntroBox.IsChecked ?? true);
-            win.Close();
+            win.Close(); // Close the window
         };
 
         var panel = new StackPanel();
-        panel.Children.Add(idFieldLabel);
-        panel.Children.Add(idActorRb);
-        panel.Children.Add(idEffectRb);
-        panel.Children.Add(nameFieldLabel);
-        panel.Children.Add(nameActorRb);
-        panel.Children.Add(nameEffectRb);
-        panel.Children.Add(nameTextRb);
-        panel.Children.Add(markerLabel);
-        panel.Children.Add(markerBox);
-        panel.Children.Add(generateIntroBox);
-        panel.Children.Add(saveButton);
-        win.Content = panel;
+        panel.Children.AddRange(
+            [
+                idFieldLabel,
+                idActorRb,
+                idEffectRb,
+                nameFieldLabel,
+                nameActorRb,
+                nameEffectRb,
+                nameTextRb,
+                markerLabel,
+                markerBox,
+                generateIntroBox,
+                saveButton,
+            ]
+        );
 
-        win.Show();
+        win.Content = panel;
+        await _windowService.ShowDialogAsync(win);
 
         return ExecutionResult.Success;
     }

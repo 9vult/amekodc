@@ -68,6 +68,7 @@ public class LineBreaker : HoloScript
     private readonly IConfiguration _configuration;
     private readonly IMessageService _messageService;
     private readonly IScriptConfigurationService _scriptConfig;
+    private readonly IWindowService _windowService;
 
     /// <inheritdoc />
     public LineBreaker()
@@ -77,10 +78,11 @@ public class LineBreaker : HoloScript
         _configuration = ScriptServiceLocator.Get<IConfiguration>();
         _messageService = ScriptServiceLocator.Get<IMessageService>();
         _scriptConfig = ScriptServiceLocator.Get<IScriptConfigurationService>();
+        _windowService = ScriptServiceLocator.Get<IWindowService>();
     }
 
     /// <inheritdoc />
-    public override Task<ExecutionResult> ExecuteAsync(string methodName)
+    public override async Task<ExecutionResult> ExecuteAsync(string methodName)
     {
         // Get current event
         var workspace = _projectProvider.Current.WorkingSpace;
@@ -98,6 +100,9 @@ public class LineBreaker : HoloScript
             _scriptConfig.Set(this, "SpaceHandling", handling);
         }
 
+        if (methodName == "config")
+            return await ShowConfigWindow(handling);
+
         return Task.FromResult(
             methodName switch
             {
@@ -105,7 +110,6 @@ public class LineBreaker : HoloScript
                 "remove" => Remove(workspace, @event, handling),
                 "left" => MoveLeft(workspace, @event, handling),
                 "right" => MoveRight(workspace, @event, handling),
-                "config" => ShowConfigWindow(handling),
                 _ => ExecutionResult.Success,
             }
         );
@@ -374,15 +378,9 @@ public class LineBreaker : HoloScript
     /// <summary>
     /// Display the configuration window
     /// </summary>
-    private ExecutionResult ShowConfigWindow(SpaceHandling handling)
+    private async Task<ExecutionResult> ShowConfigWindow(SpaceHandling handling)
     {
-        var win = new Window
-        {
-            Title = "Line Breaker Configuration",
-            SizeToContent = SizeToContent.WidthAndHeight,
-            WindowStartupLocation = WindowStartupLocation.CenterScreen,
-            CanResize = false,
-        };
+        var win = new Window { Title = "Line Breaker Configuration" };
 
         var label = new Label { Content = "How should spaces be handled?" };
         var beforeRb = new RadioButton
@@ -422,7 +420,7 @@ public class LineBreaker : HoloScript
         var panel = new StackPanel { Margin = new Thickness(5), Spacing = 5 };
         panel.Children.AddRange([label, beforeRb, afterRb, replaceRb, saveButton]);
         win.Content = panel;
-        win.Show();
+        await _windowService.ShowDialogAsync(win);
 
         return ExecutionResult.Success;
     }
