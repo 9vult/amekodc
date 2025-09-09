@@ -168,7 +168,8 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
             "AutoSwapper Config",
             "List of styles to swap, separated by semicolons. Wildcards (*, ?) are permitted.",
             content,
-            MessageBoxButtons.OkCancel
+            MsgBoxButtonSet.OkCancel,
+            MsgBoxButton.Ok
         );
 
         if (result is null)
@@ -176,7 +177,7 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
 
         var (boxResult, userInput) = result.Value;
 
-        if (boxResult == MessageBoxResult.Ok)
+        if (boxResult == MsgBoxButton.Ok)
             Styles = userInput.Split(';');
     }
 
