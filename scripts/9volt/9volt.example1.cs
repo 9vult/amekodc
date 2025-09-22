@@ -8,14 +8,14 @@ using Holo.Scripting.Models;
 
 public class Example1 : HoloScript
 {
-    public override async Task<ExecutionResult> ExecuteAsync()
+    public override async Task<ExecutionResult> ExecuteAsync(string? methodName)
     {
-        Logger.Info($"This is the primary execution entry point!");
-        return ExecutionResult.Success;
-    }
+        if (string.IsNullOrEmpty(methodName))
+        {
+            Logger.Info($"This is the primary execution entry point!");
+            return ExecutionResult.Success;
+        }
 
-    public override async Task<ExecutionResult> ExecuteAsync(string methodName)
-    {
         switch (methodName)
         {
             case "add":

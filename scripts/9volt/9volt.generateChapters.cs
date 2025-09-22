@@ -48,14 +48,11 @@ public class GenerateChapters() : HoloScript(ScriptInfo)
         ScriptServiceLocator.Get<IScriptConfigurationService>();
     private readonly IWindowService _windowService = ScriptServiceLocator.Get<IWindowService>();
 
-    // Not used
-    public override async Task<ExecutionResult> ExecuteAsync()
+    public override async Task<ExecutionResult> ExecuteAsync(string? methodName)
     {
-        return ExecutionResult.Success;
-    }
+        if (string.IsNullOrEmpty(methodName))
+            return ExecutionResult.Failure;
 
-    public override async Task<ExecutionResult> ExecuteAsync(string methodName)
-    {
         return methodName switch
         {
             "generate" => await Generate(),

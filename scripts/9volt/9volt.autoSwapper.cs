@@ -55,21 +55,19 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
         ScriptServiceLocator.Get<IScriptConfigurationService>();
     private readonly IMessageBoxService _msgBoxSvc = ScriptServiceLocator.Get<IMessageBoxService>();
 
-    public override async Task<ExecutionResult> ExecuteAsync()
+    public override async Task<ExecutionResult> ExecuteAsync(string? methodName)
     {
-        return ExecutionResult.Success;
-    }
+        if (string.IsNullOrEmpty(methodName))
+            return ExecutionResult.Failure;
 
-    public override async Task<ExecutionResult> ExecuteAsync(string method)
-    {
-        if (method == "config")
+        if (methodName == "config")
         {
             await SetConfiguration();
             return ExecutionResult.Success;
         }
 
         return Swap(
-            method switch
+            methodName switch
             {
                 "honorifics" => '*',
                 "mahjong" => '/',

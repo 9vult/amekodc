@@ -82,8 +82,11 @@ public class LineBreaker : HoloScript
     }
 
     /// <inheritdoc />
-    public override async Task<ExecutionResult> ExecuteAsync(string methodName)
+    public override async Task<ExecutionResult> ExecuteAsync(string? methodName)
     {
+        if (string.IsNullOrEmpty(methodName))
+            return ExecutionResult.Failure;
+
         // Get current event
         var workspace = _projectProvider.Current.WorkingSpace;
         var @event = _projectProvider.Current.WorkingSpace?.SelectionManager.ActiveEvent;
@@ -423,12 +426,6 @@ public class LineBreaker : HoloScript
         await _windowService.ShowDialogAsync(win);
 
         return ExecutionResult.Success;
-    }
-
-    /// <inheritdoc />
-    public override Task<ExecutionResult> ExecuteAsync()
-    {
-        return Task.FromResult(ExecutionResult.Success);
     }
 
     /// <summary>
