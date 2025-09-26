@@ -14,7 +14,8 @@
       "IsBetaChannel": false,
       "Dependencies": [],
       "Tags": [ "Mux", "Chapters", "ua" ],
-      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.generateChapters.cs"
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.generateChapters.cs",
+      "HelpUrl": "https://dc.ameko.moe/scripts/9volt/help/9volt.generateChapters.md"
     },
     {
       "Type": "Script",
