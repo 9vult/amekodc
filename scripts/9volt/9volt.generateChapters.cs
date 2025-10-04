@@ -105,7 +105,7 @@ public class GenerateChapters() : HoloScript(ScriptInfo)
                 {
                     "actor" => @event.Actor,
                     "effect" => @event.Effect,
-                    _ => @event.Text.ReplaceMany(["{", "}"], string.Empty), // TODO: Do this properly
+                    _ => @event.Text.Replace("{", string.Empty).Replace("}", string.Empty), // TODO: Do this properly
                 },
                 Start =
                     $"{@event.Start.Hours:D2}:{@event.Start.Minutes:D2}:{@event.Start.Seconds:D2}.{@event.Start.Milliseconds:D3}",
