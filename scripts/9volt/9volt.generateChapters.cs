@@ -18,9 +18,9 @@ using Holo.Scripting.Models;
 /// <summary>
 /// Script for generating chapters using Significance syntax
 /// </summary>
-public class GenerateChapters() : HoloScript(ScriptInfo)
+public class GenerateChapters() : HoloScript(_info)
 {
-    private static readonly PackageInfo ScriptInfo = new()
+    private static readonly PackageInfo _info = new()
     {
         DisplayName = "Generate Chapters",
         QualifiedName = "9volt.generateChapters",

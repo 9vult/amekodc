@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 public class Example1 : HoloScript
 {
-    private static readonly PackageInfo ScriptInfo = new()
+    private static readonly PackageInfo _info = new()
     {
         DisplayName = "Example Script 1",
         QualifiedName = "9volt.example1",
@@ -56,7 +56,7 @@ public class Example1 : HoloScript
 
     /// <inheritdoc />
     public Example1()
-        : base(ScriptInfo)
+        : base(_info)
     {
         Logger.LogInformation("Initialized test script!");
     }

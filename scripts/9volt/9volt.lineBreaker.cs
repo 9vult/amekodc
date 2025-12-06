@@ -22,7 +22,7 @@ using Holo.Scripting.Models;
 /// </summary>
 public class LineBreaker : HoloScript
 {
-    private static readonly PackageInfo ScriptInfo = new()
+    private static readonly PackageInfo _info = new()
     {
         DisplayName = "Line Breaker",
         QualifiedName = "9volt.lineBreaker",
@@ -72,7 +72,7 @@ public class LineBreaker : HoloScript
 
     /// <inheritdoc />
     public LineBreaker()
-        : base(ScriptInfo)
+        : base(_info)
     {
         _projectProvider = ScriptServiceLocator.Get<IProjectProvider>();
         _configuration = ScriptServiceLocator.Get<IConfiguration>();

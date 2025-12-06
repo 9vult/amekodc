@@ -11,9 +11,9 @@ using Holo.Providers;
 using Holo.Scripting;
 using Holo.Scripting.Models;
 
-public class AutoSwapper() : HoloScript(ScriptInfo)
+public class AutoSwapper() : HoloScript(_info)
 {
-    private static readonly PackageInfo ScriptInfo = new()
+    private static readonly PackageInfo _info = new()
     {
         DisplayName = "AutoSwapper",
         QualifiedName = "9volt.autoSwapper",
