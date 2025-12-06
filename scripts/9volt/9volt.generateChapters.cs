@@ -20,7 +20,7 @@ using Holo.Scripting.Models;
 /// </summary>
 public class GenerateChapters() : HoloScript(ScriptInfo)
 {
-    private static readonly ModuleInfo ScriptInfo = new()
+    private static readonly PackageInfo ScriptInfo = new()
     {
         DisplayName = "Generate Chapters",
         QualifiedName = "9volt.generateChapters",

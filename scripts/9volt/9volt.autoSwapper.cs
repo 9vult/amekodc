@@ -1,22 +1,19 @@
 // SPDX-License-Identifier: MPL-2.0
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Ameko.Services;
 using AssCS;
 using AssCS.History;
 using Holo.Models;
 using Holo.Providers;
 using Holo.Scripting;
 using Holo.Scripting.Models;
-using Material.Icons;
 
 public class AutoSwapper() : HoloScript(ScriptInfo)
 {
-    private static readonly ModuleInfo ScriptInfo = new()
+    private static readonly PackageInfo ScriptInfo = new()
     {
         DisplayName = "AutoSwapper",
         QualifiedName = "9volt.autoSwapper",
@@ -100,9 +97,6 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
 
         List<Event> changedEvents = [];
 
-        // Start a transaction on the whole file (lol)
-        doc.HistoryManager.BeginTransaction(doc.EventManager.Events);
-
         foreach (var @event in doc.EventManager.Events)
         {
             var changed = false;
@@ -154,7 +148,7 @@ public class AutoSwapper() : HoloScript(ScriptInfo)
             }
         }
 
-        wsp.Commit(changedEvents, ChangeType.Modify);
+        wsp.Commit(changedEvents, ChangeType.ComplexEvent);
         return true;
     }
 

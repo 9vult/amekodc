@@ -22,7 +22,7 @@ using Holo.Scripting.Models;
 /// </summary>
 public class LineBreaker : HoloScript
 {
-    private static readonly ModuleInfo ModuleInfo = new()
+    private static readonly PackageInfo ScriptInfo = new()
     {
         DisplayName = "Line Breaker",
         QualifiedName = "9volt.lineBreaker",
@@ -72,7 +72,7 @@ public class LineBreaker : HoloScript
 
     /// <inheritdoc />
     public LineBreaker()
-        : base(ModuleInfo)
+        : base(ScriptInfo)
     {
         _projectProvider = ScriptServiceLocator.Get<IProjectProvider>();
         _configuration = ScriptServiceLocator.Get<IConfiguration>();
@@ -93,7 +93,7 @@ public class LineBreaker : HoloScript
         if (workspace is null || @event is null)
         {
             _messageService.Enqueue("No event selected", TimeSpan.FromSeconds(3));
-            return Task.FromResult(ExecutionResult.Success);
+            return ExecutionResult.Success;
         }
 
         // Get space handling setting
@@ -106,16 +106,14 @@ public class LineBreaker : HoloScript
         if (methodName == "config")
             return await ShowConfigWindow(handling);
 
-        return Task.FromResult(
-            methodName switch
-            {
-                "add" => Add(workspace, @event, handling),
-                "remove" => Remove(workspace, @event, handling),
-                "left" => MoveLeft(workspace, @event, handling),
-                "right" => MoveRight(workspace, @event, handling),
-                _ => ExecutionResult.Success,
-            }
-        );
+        return methodName switch
+        {
+            "add" => Add(workspace, @event, handling),
+            "remove" => Remove(workspace, @event, handling),
+            "left" => MoveLeft(workspace, @event, handling),
+            "right" => MoveRight(workspace, @event, handling),
+            _ => ExecutionResult.Success,
+        };
     }
 
     /// <summary>
@@ -129,9 +127,6 @@ public class LineBreaker : HoloScript
             _messageService.Enqueue("Event already has a break", TimeSpan.FromSeconds(3));
             return ExecutionResult.Success;
         }
-
-        // Start doing stuff
-        workspace.Document.HistoryManager.BeginTransaction(@event);
 
         // Find midpoint
         var spaceIndexes = GetSpaceIndexes(@event);
@@ -169,7 +164,7 @@ public class LineBreaker : HoloScript
         }
 
         // Commit change
-        workspace.Commit(@event, ChangeType.Modify);
+        workspace.Commit(@event, ChangeType.ModifyEventText);
         return ExecutionResult.Success;
     }
 
@@ -188,9 +183,6 @@ public class LineBreaker : HoloScript
             return ExecutionResult.Success;
         }
 
-        // Start doing stuff
-        workspace.Document.HistoryManager.BeginTransaction(@event);
-
         // Remove line breaks
         switch (handling)
         {
@@ -203,7 +195,7 @@ public class LineBreaker : HoloScript
         }
 
         // Commit change
-        workspace.Commit(@event, ChangeType.Modify);
+        workspace.Commit(@event, ChangeType.ModifyEventText);
         return ExecutionResult.Success;
     }
 
@@ -221,9 +213,6 @@ public class LineBreaker : HoloScript
             );
             return ExecutionResult.Success;
         }
-
-        // Start doing stuff
-        workspace.Document.HistoryManager.BeginTransaction(@event);
 
         // Find the current linebreak
         var spaceIndexes = GetSpaceIndexes(@event);
@@ -274,7 +263,7 @@ public class LineBreaker : HoloScript
         }
 
         // Commit change
-        workspace.Commit(@event, ChangeType.Modify);
+        workspace.Commit(@event, ChangeType.ModifyEventText);
         return ExecutionResult.Success;
     }
 
@@ -292,9 +281,6 @@ public class LineBreaker : HoloScript
             );
             return ExecutionResult.Success;
         }
-
-        // Start doing stuff
-        workspace.Document.HistoryManager.BeginTransaction(@event);
 
         // Find the current linebreak
         var spaceIndexes = GetSpaceIndexes(@event);
@@ -347,7 +333,7 @@ public class LineBreaker : HoloScript
         }
 
         // Commit change
-        workspace.Commit(@event, ChangeType.Modify);
+        workspace.Commit(@event, ChangeType.ModifyEventText);
         return ExecutionResult.Success;
     }
 

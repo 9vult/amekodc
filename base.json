@@ -1,9 +1,9 @@
 {
   "Name": "Ameko Package Manager Base",
-  "Description": "Default package manager repository included with Ameko",
+  "Description": "Default repository included with Ameko",
   "Maintainer": "9volt",
   "IsBetaChannel": false,
-  "Modules": [
+  "Packages": [
     {
       "Type": "Script",
       "DisplayName": "Generate Chapters",

@@ -2,6 +2,7 @@
 
 using Holo.Scripting;
 using Holo.Scripting.Models;
+using Microsoft.Extensions.Logging;
 
 public class Calculator : HoloLibrary
 {
@@ -27,18 +28,12 @@ public class Calculator : HoloLibrary
         return a * b;
     }
 
+    /// <inheritdoc />
     public Calculator()
         : base(
-            new ModuleInfo
-            {
-                DisplayName = "CalculatorLib",
-                QualifiedName = "9volt.calculator",
-                Description = "A basic library for testing",
-                Author = "9volt",
-                Version = 0.1m,
-            }
+            new PackageInfo { DisplayName = "CalculatorLib", QualifiedName = "9volt.calculator" }
         )
     {
-        Logger.Info("Initialized test library!");
+        Logger.LogInformation("Initialized test library!");
     }
 }
