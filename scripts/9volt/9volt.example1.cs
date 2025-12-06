@@ -29,7 +29,7 @@ public class Example1 : HoloScript
             },
         ],
         LogDisplay = LogDisplay.OnError,
-    }
+    };
 
     /// <inheritdoc />
     public override async Task<ExecutionResult> ExecuteAsync(string? methodName)
