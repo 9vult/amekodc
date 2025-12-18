@@ -15,7 +15,8 @@
       "Dependencies": [],
       "Tags": [ "Mux", "Chapters", "ua" ],
       "Url": "https://dc.ameko.moe/scripts/9volt/9volt.generateChapters.cs",
-      "HelpUrl": "https://dc.ameko.moe/scripts/9volt/help/9volt.generateChapters.md"
+      "HelpUrl": "https://dc.ameko.moe/scripts/9volt/help/9volt.generateChapters.md",
+      "Changelog": []
     },
     {
       "Type": "Script",
@@ -27,7 +28,8 @@
       "IsBetaChannel": false,
       "Dependencies": [],
       "Tags": [ "Dialogue", "Daiz" ],
-      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.autoSwapper.cs"
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.autoSwapper.cs",
+      "Changelog": []
     },
     {
       "Type": "Script",
@@ -39,7 +41,8 @@
       "IsBetaChannel": false,
       "Dependencies": [],
       "Tags": [ "Dialogue" ],
-      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.lineBreaker.cs"
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.lineBreaker.cs",
+      "Changelog": []
     },
     {
       "Type": "Script",
@@ -51,7 +54,8 @@
       "IsBetaChannel": false,
       "Dependencies": [ "9volt.calculator" ],
       "Tags": [ "Example", "Dialogue" ],
-      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.example1.cs"
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.example1.cs",
+      "Changelog": []
     },
     {
       "Type": "Library",
@@ -59,11 +63,31 @@
       "QualifiedName": "9volt.calculator",
       "Description": "A basic library for testing",
       "Author": "9volt",
-      "Version": 0.1,
+      "Version": 0.5,
       "IsBetaChannel": false,
       "Dependencies": [],
       "Tags": [ "Calculator" ],
-      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.calculator.lib.cs"
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.calculator.lib.cs",
+      "Changelog": [
+        {
+          "Version": 0.1,
+          "Added": [ "Subtract method", "Divide method" ]
+        },
+        {
+          "Version": 0.2,
+          "Fixed": [ "Unhandled divide by zero error in Divide" ]
+        },
+        {
+          "Version": 0.3,
+          "Added": [ "Add method", "Multiply method" ],
+          "Deprecated": [ "Subtract method - use Add() with a negative number instead", "Divide method" ]
+        },
+        {
+          "Version": 0.4,
+          "Changed": "Added a log when the library is initialized",
+          "Removed": [ "Subtract method", "Divide method" ]
+        }
+      ]
     }
   ],
   "Repositories": []
