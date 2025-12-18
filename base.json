@@ -84,7 +84,7 @@
         },
         {
           "Version": 0.4,
-          "Changed": "Added a log when the library is initialized",
+          "Changed": [ "Added a log when the library is initialized" ],
           "Removed": [ "Subtract method", "Divide method" ]
         }
       ]
