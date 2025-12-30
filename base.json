@@ -6,6 +6,26 @@
   "Packages": [
     {
       "Type": "Script",
+      "DisplayName": "Timing Butler",
+      "QualifiedName": "9volt.timingButler",
+      "Description": "A script to help with timing adjustments",
+      "Author": "9volt",
+      "Version": 1.0,
+      "IsBetaChannel": false,
+      "License": "MPL-2.0",
+      "Dependencies": [],
+      "Tags": [ "Timing" ],
+      "Url": "https://dc.ameko.moe/scripts/9volt/9volt.timingButler.cs",
+      "HelpUrl": "https://dc.ameko.moe/scripts/9volt/help/9volt.timingButler.md",
+      "Changelog": [
+        {
+          "Version": 1.0,
+          "Added": [ "Initial release" ]
+        }
+      ]
+    },
+    {
+      "Type": "Script",
       "DisplayName": "Generate Chapters",
       "QualifiedName": "9volt.generateChapters",
       "Description": "Generate a Matroska chapters file using Significance syntax",
