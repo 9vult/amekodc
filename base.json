@@ -45,13 +45,18 @@
       "QualifiedName": "9volt.autoSwapper",
       "Description": "Swap the state of honorifics (*), mahjong terms (/), and verbal tics (<) in the script",
       "Author": "9volt",
-      "Version": 1.0,
+      "Version": 1.1,
       "IsBetaChannel": false,
       "License": "MPL-2.0",
       "Dependencies": [],
       "Tags": [ "Dialogue", "Daiz" ],
       "Url": "https://dc.ameko.moe/scripts/9volt/9volt.autoSwapper.cs",
-      "Changelog": []
+      "Changelog": [
+        {
+          "Version": 1.1,
+          "Added": [ "Poor man's Spanish translation" ]
+        }
+      ]
     },
     {
       "Type": "Script",

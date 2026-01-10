@@ -15,34 +15,34 @@ public class AutoSwapper() : HoloScript(_info)
 {
     private static readonly PackageInfo _info = new()
     {
-        DisplayName = "AutoSwapper",
+        DisplayName = Strings.DisplayName,
         QualifiedName = "9volt.autoSwapper",
         Headless = true,
         Exports =
         [
             new MethodInfo
             {
-                DisplayName = "Swap Honorifics",
+                DisplayName = Strings.SwapHonorifics,
                 QualifiedName = "honorifics",
-                Submenu = "AutoSwapper",
+                Submenu = Strings.DisplayName,
             },
             new MethodInfo
             {
-                DisplayName = "Swap Mahjong Terms",
+                DisplayName = Strings.SwapMahjongTerms,
                 QualifiedName = "mahjong",
-                Submenu = "AutoSwapper",
+                Submenu = Strings.DisplayName,
             },
             new MethodInfo
             {
-                DisplayName = "Swap Verbal Tics",
+                DisplayName = Strings.SwapVerbalTics,
                 QualifiedName = "verbalTics",
-                Submenu = "AutoSwapper",
+                Submenu = Strings.DisplayName,
             },
             new MethodInfo
             {
-                DisplayName = "Configuration",
+                DisplayName = Strings.Configuration,
                 QualifiedName = "config",
-                Submenu = "AutoSwapper",
+                Submenu = Strings.DisplayName,
             },
         ],
     };
@@ -157,8 +157,8 @@ public class AutoSwapper() : HoloScript(_info)
         var content = string.Join(";", Styles.Select(s => s.Trim()));
 
         var result = await _msgBoxSvc.ShowInputAsync(
-            "AutoSwapper Config",
-            "List of styles to swap, separated by semicolons. Wildcards (*, ?) are permitted.",
+            Strings.ConfigWindowTitle,
+            Strings.ConfigWindowText,
             content,
             MsgBoxButtonSet.OkCancel,
             MsgBoxButton.Ok
@@ -212,4 +212,55 @@ public class AutoSwapper() : HoloScript(_info)
         Status = ExecutionStatus.Failure,
         Message = "No document loaded",
     };
+
+    #region Localization
+
+    /// <summary>
+    /// Get the strings for the current language (falls back to en-US)
+    /// </summary>
+    private static ILocalization Strings => ScriptServiceLocator
+        .Get<ICultureService>()
+        .CurrentLanguage.Locale switch
+    {
+        "en-US" => new LocalizationEnUs(),
+        "es-419" => new LocalizationEs419(),
+        _ => new LocalizationEnUs(),
+    };
+
+    private interface ILocalization
+    {
+        string DisplayName { get; }
+        string SwapHonorifics { get; }
+        string SwapMahjongTerms { get; }
+        string SwapVerbalTics { get; }
+        string Configuration { get; }
+        string ConfigWindowTitle { get; }
+        string ConfigWindowText { get; }
+    }
+
+    private class LocalizationEnUs : ILocalization
+    {
+        public string DisplayName => "AutoSwapper";
+        public string SwapHonorifics => "Swap Honorifics";
+        public string SwapMahjongTerms => "Swap Mahjong Terms";
+        public string SwapVerbalTics => "Swap Verbal Tics";
+        public string Configuration => "Configuration";
+        public string ConfigWindowTitle => "AutoSwapper Config";
+        public string ConfigWindowText =>
+            "List of styles to swap, separated by semicolons. Wildcards (*, ?) are permitted.";
+    }
+
+    private class LocalizationEs419 : ILocalization
+    {
+        public string DisplayName => "Intercambiador automático";
+        public string SwapHonorifics => "Intercambiar honoríficos";
+        public string SwapMahjongTerms => "Intercambiar términos de Mahjong";
+        public string SwapVerbalTics => "Intercambiar tics verbales";
+        public string Configuration => "Configuración";
+        public string ConfigWindowTitle => "Configuración del intercambiador automático";
+        public string ConfigWindowText =>
+            "Lista de estilos para intercambiar, separados por punto y coma. Se permiten comodines (*, ?).";
+    }
+
+    #endregion
 }
